@@ -169,7 +169,7 @@
         <yarn.version>v1.12.3</yarn.version>
 
         <!-- Plugin versions -->
-        <license-maven.version>2.11</license-maven.version>
+        <license-maven.version>3.0</license-maven.version>
     </properties>
 
     <repositories>
