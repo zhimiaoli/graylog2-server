@@ -359,6 +359,7 @@ const ApiRoutes = {
   },
   PipelinesController: {
     list: () => { return { url: '/system/pipelines/pipeline' }; },
+    listPage: () => { return { url: '/system/pipelines/pipeline/page' }; },
     create: () => { return { url: '/system/pipelines/pipeline' }; },
     get: (pipelineId) => { return { url: `/system/pipelines/pipeline/${pipelineId}` }; },
     update: (pipelineId) => { return { url: `/system/pipelines/pipeline/${pipelineId}` }; },
