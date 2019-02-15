@@ -368,6 +368,7 @@ const ApiRoutes = {
   },
   RulesController: {
     list: () => { return { url: '/system/pipelines/rule' }; },
+    listPage: () => { return { url: '/system/pipelines/rule/page' }; },
     create: () => { return { url: '/system/pipelines/rule' }; },
     get: (ruleId) => { return { url: `/system/pipelines/rule/${ruleId}` }; },
     update: (ruleId) => { return { url: `/system/pipelines/rule/${ruleId}` }; },
