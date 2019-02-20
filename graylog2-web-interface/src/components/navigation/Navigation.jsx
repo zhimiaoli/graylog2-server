@@ -12,7 +12,6 @@ import PermissionsMixin from 'util/PermissionsMixin';
 
 import Routes from 'routing/Routes';
 import URLUtils from 'util/URLUtils';
-import AppConfig from 'util/AppConfig';
 
 import { PluginStore } from 'graylog-web-plugin/plugin';
 
@@ -20,12 +19,12 @@ import GlobalThroughput from 'components/throughput/GlobalThroughput';
 import UserMenu from 'components/navigation/UserMenu';
 import HelpMenu from 'components/navigation/HelpMenu';
 import { IfPermitted } from 'components/common';
-import badgeStyles from 'components/bootstrap/Badge.css';
 
 import NavigationBrand from './NavigationBrand';
 import InactiveNavItem from './InactiveNavItem';
 import NotificationBadge from './NotificationBadge';
 import NavigationLink from './NavigationLink';
+import HeaderBadge from './HeaderBadge';
 import SystemMenu from './SystemMenu';
 
 const CurrentUserStore = StoreProvider.getStore('CurrentUser');
@@ -64,6 +63,8 @@ const Navigation = ({ permissions, fullName, location, loginName }) => {
   const pluginNavigations = PluginStore.exports('navigation')
     .sort((route1, route2) => naturalSort(route1.description.toLowerCase(), route2.description.toLowerCase()))
     .map(pluginRoute => formatPluginRoute(pluginRoute, permissions, location));
+
+  const headerBadge = <HeaderBadge />;
 
   return (
     <Navbar inverse fluid fixedTop>
@@ -114,11 +115,7 @@ const Navigation = ({ permissions, fullName, location, loginName }) => {
           </LinkContainer>
           <HelpMenu active={_isActive(location.pathname, Routes.GETTING_STARTED)} />
           <UserMenu fullName={fullName} loginName={loginName} />
-          {AppConfig.gl2DevMode() ?
-            <NavItem className="notification-badge-link">
-              <Badge className={badgeStyles.badgeDanger}>DEV</Badge>
-            </NavItem>
-            : null}
+          { headerBadge && <NavItem className="notification-badge-link">{ headerBadge }</NavItem> }
         </Nav>
       </Navbar.Collapse>
     </Navbar>
