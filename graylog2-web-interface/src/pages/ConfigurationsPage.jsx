@@ -4,19 +4,17 @@ import Reflux from 'reflux';
 import { Row, Col } from 'react-bootstrap';
 import { DocumentTitle, PageHeader, Spinner } from 'components/common';
 import { PluginStore } from 'graylog-web-plugin/plugin';
-
 import StoreProvider from 'injection/StoreProvider';
-const ConfigurationsStore = StoreProvider.getStore('Configurations');
-
 import ActionsProvider from 'injection/ActionsProvider';
-const ConfigurationActions = ActionsProvider.getActions('Configuration');
-
 import SearchesConfig from 'components/configurations/SearchesConfig';
 import MessageProcessorsConfig from 'components/configurations/MessageProcessorsConfig';
 import SidecarConfig from 'components/configurations/SidecarConfig';
 import CustomizationConfig from 'components/configurations/CustomizationConfig';
-
 import {} from 'components/maps/configurations';
+
+const ConfigurationActions = ActionsProvider.getActions('Configuration');
+const ConfigurationsStore = StoreProvider.getStore('Configurations');
+
 
 const ConfigurationsPage = createReactClass({
   displayName: 'ConfigurationsPage',
@@ -44,6 +42,7 @@ const ConfigurationsPage = createReactClass({
     this.style.unuse();
   },
 
+  /* eslint-disable-next-line */
   style: require('!style/useable!css!components/configurations/ConfigurationStyles.css'),
   SEARCHES_CLUSTER_CONFIG: 'org.graylog2.indexer.searches.SearchesClusterConfig',
   MESSAGE_PROCESSORS_CONFIG: 'org.graylog2.messageprocessors.MessageProcessorsConfig',
@@ -69,9 +68,9 @@ const ConfigurationsPage = createReactClass({
   },
 
   _pluginConfigs() {
-    return PluginStore.exports('systemConfigurations').map((systemConfig, idx) => {
+    return PluginStore.exports('systemConfigurations').map((systemConfig) => {
       return React.createElement(systemConfig.component, {
-        key: `system-configuration-${idx}`,
+        key: `system-configuration-${systemConfig.configType}`,
         config: this._getConfig(systemConfig.configType) || undefined,
         updateConfig: this._onUpdate(systemConfig.configType),
       });
@@ -85,7 +84,7 @@ const ConfigurationsPage = createReactClass({
 
     // Put two plugin config components per row.
     while (pluginConfigs.length > 0) {
-      idx++;
+      idx += 1;
       rows.push(
         <Row key={`plugin-config-row-${idx}`}>
           <Col md={6}>
